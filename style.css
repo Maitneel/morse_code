@@ -1,0 +1,13 @@
+body {
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button{
+  padding: 5px 20px;
+}
+
+text_box{
+  height: 30px;
+}
