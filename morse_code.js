@@ -71,17 +71,13 @@
       "－－・・", 
       "－・－－", 
     ]
-    console.log(morse_code[0]);
     let result = '';
     let i;
     for(i = 0; i < str.length; i++) {
       let charCodeNum = str.charCodeAt(i);
-      console.log(charCodeNum);
       if(charCodeNum >='a'.charCodeAt()) {
         charCodeNum -= 'a'.charCodeAt() - 'A'.charCodeAt();
       }
-      console.log(charCodeNum);
-      console.log(morse_code[charCodeNum - 'A'.charCodeAt()]);
       result += morse_code[charCodeNum - 'A'.charCodeAt()];
       result += ' ';
     }
