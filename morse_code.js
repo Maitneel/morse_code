@@ -6,6 +6,8 @@
 
   function chengeJA_Alpha(str) {
     let result = '';
+    console.log(str);
+    console.log(str.length);
 
     //TODO 引数charが全角カタカナだった場合ひらがなに変換する処理を実装
     //TODO 引数charが半角カタカナだった場合ひらがなに変換する処理を実装
@@ -36,13 +38,17 @@
       //んゔゕゖ
       'n', 'vu', 'xka', 'xke'
     ];
+    
+    console.log('A'.charCodeAt() + ' ' + 'z'.charCodeAt());
+
 
     let i;
     for(i = 0; i < str.length; i++) {
+      console.log(str.charAt(i));
       let charCodeNum = str.charCodeAt(i);
       if(charCodeNum === ' '.charCodeAt() ||charCodeNum === '　'.charCodeAt()) {
         result += ' ';
-      } else if('a'.charCodeAt() <= charCodeNum && charCodeNum <= 'Z') {
+      } else if('A'.charCodeAt() <= charCodeNum && charCodeNum <= 'z'.charCodeAt()) {
         result += str.charAt(i);
       } else if('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
         charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
@@ -81,13 +87,14 @@
     for (i = 0; i < str.length; i++) {
       let charCodeNum = str.charCodeAt(i);
       if(charCodeNum === ' '.charCodeAt() || charCodeNum === '　'.charCodeAt()) {
-        result += '　　';
+        result += '　　　';
+      } else {
+        if (charCodeNum >= 'a'.charCodeAt()) {
+          charCodeNum -= 'a'.charCodeAt() - 'A'.charCodeAt();
+        }
+        result += morse_code[charCodeNum - 'A'.charCodeAt()];
+        result += '　';
       }
-      if (charCodeNum >= 'a'.charCodeAt()) {
-        charCodeNum -= 'a'.charCodeAt() - 'A'.charCodeAt();
-      }
-      result += morse_code[charCodeNum - 'A'.charCodeAt()];
-      result += '　';
       console.log(str.charAt(i));
     }
     
@@ -101,7 +108,7 @@
     let chengeCharJA_alpha;
 
     console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
-    
+    console.log(inputText);
 
 
 
