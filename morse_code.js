@@ -44,18 +44,21 @@
         result += ' ';
       } else if('a'.charCodeAt() <= charCodeNum && charCodeNum <= 'Z') {
         result += str.charAt(i);
-      } else if(charCodeNum >= 'ァ'.charCodeAt() && charCodeNum <= 'ヶ'.charCodeAt()) {
+      } else if('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
         charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
         result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
-      } else if('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ') {
+      } else if('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
         result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
       } else {
         //TODO エラーしたことを示す何かを実装する
         console.log('error');
+        console.log(charCodeNum);
+        
       }
     }
     console.log(result);
-
+    console.log('ぁ'.charCodeAt());
+    console.log('ゔ'.charCodeAt());
 
     return result;
   }
@@ -77,11 +80,14 @@
     let i;
     for (i = 0; i < str.length; i++) {
       let charCodeNum = str.charCodeAt(i);
+      if(charCodeNum === ' '.charCodeAt() || charCodeNum === '　'.charCodeAt()) {
+        result += '　　';
+      }
       if (charCodeNum >= 'a'.charCodeAt()) {
         charCodeNum -= 'a'.charCodeAt() - 'A'.charCodeAt();
       }
       result += morse_code[charCodeNum - 'A'.charCodeAt()];
-      result += ' ';
+      result += '　';
       console.log(str.charAt(i));
     }
     
