@@ -35,12 +35,18 @@
       'xwa', 'wa', 'i', 'e', 'o',
       //んゔゕゖ
       'n', 'vu', 'xka', 'xke'
-    ]
+    ];
 
-
-
-
-
+    let i;
+    for(i = 0; i < str.length; i++) {
+      let charCodeNum = str.charCodeAt(i);
+      if(charCodeNum >= 'ァ'.charCodeAt()) {
+        charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
+      }
+      result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
+      
+    }
+    console.log(result);
 
 
     return result;
@@ -56,7 +62,7 @@
       "－－－", "・－－・", "－－・－", "－・", "・・・", "－", "・・－",
       //VWXYZ
       "・・・－", "・－－", "－・・－", "－－・・", "－・－－"
-    ]
+    ];
 
     
     let result = '';
@@ -78,15 +84,20 @@
     let inputText = inputTextBox.value;
     let chengeCharJA_alpha;
 
+    console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
+    
+
+
+
     let i;
     for (i = 0; i < inputText.length; i++) {
       //chengeJA_Alpha(inputText.charAt(i), false)
       //console.log(chengeJA_Alpha(inputText.charAt(i), false));
     }
-    console.log(chengeAlpha_Morse(inputText));
+    //console.log(chengeAlpha_Morse(inputText));
 
 
-    console.log(inputTextBox.value);
+    //console.log(inputTextBox.value);
   }
 
 })();
