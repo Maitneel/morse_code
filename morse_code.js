@@ -55,6 +55,9 @@
         result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
       } else if('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
         result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
+      } else if(charCodeNum <= 'ｧ'.charCodeAt() && 'ﾟ'.charCodeAt() <= charCodeNum) {
+        charCodeNum -= 'ｧ'.charCodeAt();
+        //TODO 半角カタカナのときの処理を実装(関数化してその関数を呼び出すのが良いと思う。)
       } else {
         //TODO エラーしたことを示す何かを実装する
         console.log('error');
@@ -121,6 +124,12 @@
 
 
     //console.log(inputTextBox.value);
+  }
+
+  inputTextBox.onkeydown = (event) => {
+    if(event.keyCode === 13) {
+      encodeButton.onclick();
+    }
   }
 
 })();
