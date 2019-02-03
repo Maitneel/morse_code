@@ -4,6 +4,32 @@
   const inputTextBox = document.getElementById('input_text');
   const encodeButton = document.getElementById('encode_button');
 
+  function half_of_charJA (charNum) {
+    const consonant = ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w'];
+    const vowel = ['a', 'i', 'u', 'e', 'o'];
+    let result = '';
+
+    if(!charNum < 10) {
+      charNum -= 10;
+      if(charNum > 37) {
+        charNum += 2;
+        console.log('inc2 ' + charNum);
+      }
+
+      console.log(charNum + ' ' + charNum / 5 + ' ' + charNum % 5);
+      result += consonant[Math.floor(charNum / 5)];
+      if(Math.floor(charNum / 5) === 7) {
+        const vowel_y = ['a', 'u', 'o'];
+        result += vowel_y[charNum % 5];
+      } else {
+        result += vowel[charNum % 5];
+      }
+    }
+    console.log("result =" + result);
+    console.log(charNum);
+    return result;
+  }
+
   function chengeJA_Alpha(str) {
     let result = '';
     console.log(str);
@@ -55,9 +81,10 @@
         result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
       } else if('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
         result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
-      } else if(charCodeNum <= 'ｧ'.charCodeAt() && 'ﾟ'.charCodeAt() <= charCodeNum) {
+      } else if('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
         //TODO 半角カタカナのときの処理を実装(関数化してその関数を呼び出すのが良いと思う。)
+        result += half_of_charJA(charCodeNum);
       } else {
         //TODO エラーしたことを示す何かを実装する
         console.log('error');
