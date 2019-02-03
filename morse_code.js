@@ -7,33 +7,37 @@
   function half_of_charJA (charNum) {
     const consonant = ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w'];
     const vowel = ['a', 'i', 'u', 'e', 'o'];
+    const vowel_y = ['a', 'u', 'o'];
     let result = '';
 
-    if(!charNum < 10) {
+    if(!(charNum < 10)) {
       charNum -= 10;
       if(charNum > 37) {
         charNum += 2;
-        console.log('inc2 ' + charNum);
       }
 
-      console.log(charNum + ' ' + charNum / 5 + ' ' + charNum % 5);
+
       result += consonant[Math.floor(charNum / 5)];
       if(Math.floor(charNum / 5) === 7) {
-        const vowel_y = ['a', 'u', 'o'];
         result += vowel_y[charNum % 5];
       } else {
         result += vowel[charNum % 5];
       }
+    } else {
+      if(charNum < 5) {
+        result += 'x' + vowel[charNum % 5];
+      } else if(charNum < 8) {
+        result += 'xy' + vowel_y[charNum % 5];
+      } else if(charNum === 8) {
+        result += 'tt';
+      }
     }
     console.log("result =" + result);
-    console.log(charNum);
     return result;
   }
 
   function chengeJA_Alpha(str) {
     let result = '';
-    console.log(str);
-    console.log(str.length);
 
     //TODO 引数charが全角カタカナだった場合ひらがなに変換する処理を実装
     //TODO 引数charが半角カタカナだった場合ひらがなに変換する処理を実装
@@ -65,12 +69,10 @@
       'n', 'vu', 'xka', 'xke'
     ];
     
-    console.log('A'.charCodeAt() + ' ' + 'z'.charCodeAt());
 
 
     let i;
     for(i = 0; i < str.length; i++) {
-      console.log(str.charAt(i));
       let charCodeNum = str.charCodeAt(i);
       if(charCodeNum === ' '.charCodeAt() ||charCodeNum === '　'.charCodeAt()) {
         result += ' ';
@@ -84,6 +86,7 @@
       } else if('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
         //TODO 半角カタカナのときの処理を実装(関数化してその関数を呼び出すのが良いと思う。)
+        console.log(charCodeNum);
         result += half_of_charJA(charCodeNum);
       } else {
         //TODO エラーしたことを示す何かを実装する
@@ -93,8 +96,6 @@
       }
     }
     console.log(result);
-    console.log('ぁ'.charCodeAt());
-    console.log('ゔ'.charCodeAt());
 
     return result;
   }
