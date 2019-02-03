@@ -3,6 +3,7 @@
 
   const inputTextBox = document.getElementById('input_text');
   const encodeButton = document.getElementById('encode_button');
+  const resultDivided = document.getElementById('result-area');
 
   function half_of_charJA (charNum) {
     const consonant = ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w'];
@@ -124,7 +125,9 @@
           charCodeNum -= 'a'.charCodeAt() - 'A'.charCodeAt();
         }
         result += morse_code[charCodeNum - 'A'.charCodeAt()];
-        result += '　';
+        if(!(i === str.length - 1)) {
+          result += '　';
+        }
       }
       console.log(str.charAt(i));
     }
@@ -142,16 +145,20 @@
     console.log(inputText);
 
 
+    const header = document.createElement('h3');
+    header.innerText = '変換結果';
+    resultDivided.appendChild(header);
+    
 
-    let i;
-    for (i = 0; i < inputText.length; i++) {
-      //chengeJA_Alpha(inputText.charAt(i), false)
-      //console.log(chengeJA_Alpha(inputText.charAt(i), false));
-    }
-    //console.log(chengeAlpha_Morse(inputText));
+    const paragraph = document.createElement('p');
+    const result = chengeAlpha_Morse(chengeJA_Alpha(inputText));
+    paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
+    resultDivided.appendChild(paragraph);
 
 
-    //console.log(inputTextBox.value);
+
+
+    
   }
 
   inputTextBox.onkeydown = (event) => {
