@@ -136,6 +136,11 @@
   }
 
 
+  function removeAllChildren(element) {
+    while(element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+  }
 
   encodeButton.onclick = () => {
     let inputText = inputTextBox.value;
@@ -145,6 +150,7 @@
     console.log(inputText);
 
 
+    removeAllChildren(resultDivided);
     const header = document.createElement('h3');
     header.innerText = '変換結果';
     resultDivided.appendChild(header);
