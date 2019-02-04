@@ -30,12 +30,26 @@
         charNum += 2;
       }
 
+      //TODO 濁点，半濁点についての実装
       //TODO ヘボン式が違う時の処理を実装
-      result += consonant[Math.floor(charNum / 5)];
-      if (Math.floor(charNum / 5) === 7) {
-        result += vowel_y[charNum % 5];
+      //実装する必要がある文字
+      //しちつふ
+
+      if(charNum == 11) {
+        result += 'shi';
+      } else if (charNum == 16) {
+        result += 'chi';
+      } else if (charNum == 17) {
+        result += 'thu';
+      } else if (charNum == 27) {
+        result += 'fu';
       } else {
-        result += vowel[charNum % 5];
+        result += consonant[Math.floor(charNum / 5)];
+        if (Math.floor(charNum / 5) === 7) {
+          result += vowel_y[charNum % 5];
+        } else {
+          result += vowel[charNum % 5];
+        }
       }
     } else {
       if (charNum < 5) {
