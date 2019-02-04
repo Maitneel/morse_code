@@ -30,7 +30,7 @@
         charNum += 2;
       }
 
-
+      //TODO ヘボン式が違う時の処理を実装
       result += consonant[Math.floor(charNum / 5)];
       if (Math.floor(charNum / 5) === 7) {
         result += vowel_y[charNum % 5];
@@ -43,7 +43,7 @@
       } else if (charNum < 8) {
         result += 'xy' + vowel_y[charNum % 5];
       } else if (charNum === 8) {
-        result += '*';
+        result += 'xtu';
       }
     }
     console.log("result =" + result);
@@ -121,27 +121,41 @@
       if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
         charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
       }
+      console.log(charCodeNum + ' ' + 'ｯ'.charCodeAt());
+      if (charCodeNum === 'っ'.charCodeAt() || charCodeNum === 'ｯ'.charCodeAt()) {
+        i++;
+        charCodeNum = str.charCodeAt(i);
+        if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
+          charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
+        }
+        console.log();
+        console.log(i !== str.length + ' ' + 'ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt())
+        console.log()
+        if(i !== str.length && 'ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+          charCodeNum -= 'ｧ'.charCodeAt();
+          let return_alpha = half_of_charJA(charCodeNum);
+          if(return_alpha.length !== 1) {
+            result += return_alpha.charAt(0);
+            result += return_alpha;
+          } else {
+            result += 'xtu';
+          }
+        } else if(i !== str.length && is_consonant(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt())) {
+          result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt();
+          console.log(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt());
+        } else {
+          result += 'xtu';
+          if(i === str.length) {
+            break;
+          }
+        }
+      }
 
       if (charCodeNum === ' '.charCodeAt() || charCodeNum === '　'.charCodeAt()) {
         result += ' ';
       } else if ('A'.charCodeAt() <= charCodeNum && charCodeNum <= 'z'.charCodeAt()) {
         result += str.charAt(i);
       } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
-        if (charCodeNum === 'っ'.charCodeAt()) {
-          i++;
-          charCodeNum = str.charCodeAt(i);
-          if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
-            charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
-          }
-          if(i !== str.length && is_consonant(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt())) {
-            result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt();
-          } else {
-            result += 'xtu';
-            if(i === str.length) {
-              break;
-            }
-          }
-        }
         result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
       } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
