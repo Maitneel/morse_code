@@ -19,14 +19,14 @@
 
 
   function half_of_charJA(charNum) {
-    const consonant = ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w'];
+    const consonant = ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w', 'g', 'z', 'd', '', 'b', 'p'];
     const vowel = ['a', 'i', 'u', 'e', 'o'];
     const vowel_y = ['a', 'u', 'o'];
     let result = '';
 
     if (!(charNum < 10)) {
       charNum -= 10;
-      if (charNum > 37) {
+      if (charNum > 37 && charNum < 45) {
         charNum += 2;
       }
 
@@ -40,10 +40,12 @@
       } else if (charNum == 16) {
         result += 'chi';
       } else if (charNum == 17) {
-        result += 'thu';
+        result += 'thu'; 
       } else if (charNum == 27) {
         result += 'fu';
-      } else {
+      } 
+
+        else {
         result += consonant[Math.floor(charNum / 5)];
         if (Math.floor(charNum / 5) === 7) {
           result += vowel_y[charNum % 5];
@@ -174,6 +176,13 @@
       } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
         //TODO 半角カタカナのときの処理を実装(関数化してその関数を呼び出すのが良いと思う。)
+        if(str.charAt(i + 1 ) == 'ﾞ') {
+          charCodeNum += 5 * 9;
+          i++;
+        } else if (str.charAt(i + 1) == 'ﾟ') {
+          charCodeNum += 5 * (9 + 1);
+          i++;
+        }
         console.log(charCodeNum);
         result += half_of_charJA(charCodeNum);
       } else {
@@ -250,7 +259,7 @@
     let inputText = inputTextBox.value;
     let chengeCharJA_alpha;
 
-    console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
+    //console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
     console.log(inputText);
 
 
@@ -265,6 +274,7 @@
     paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
     resultDivided.appendChild(paragraph);
 
+    console.log(chengeJA_Alpha(inputText));
 
   }
 
