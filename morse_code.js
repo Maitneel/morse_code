@@ -101,61 +101,43 @@
       //んゔゕゖ
       'n', 'vu', 'xka', 'xke'
     ];
-
+    
 
 
     let i;
-    /*
-    for(i = 0; i < str.length; i++) {
-      let charCodeNum = str.charCodeAt(i);
-      if(charCodeNum === ' '.charCodeAt() ||charCodeNum === '　'.charCodeAt()) {
-        result += ' ';
-      } else if('A'.charCodeAt() <= charCodeNum && charCodeNum <= 'z'.charCodeAt()) {
-        result += str.charAt(i);
-      } else if('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
-        charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
-        result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
-      } else if('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
-        result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
-      } else if('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
-        charCodeNum -= 'ｧ'.charCodeAt();
-        //TODO 半角カタカナのときの処理を実装(関数化してその関数を呼び出すのが良いと思う。)
-        console.log(charCodeNum);
-        result += half_of_charJA(charCodeNum);
-      } else {
-        //TODO エラーしたことを示す何かを実装する
-        console.log('error');
-        console.log(charCodeNum);
-        
-      }
-    }
-    */
 
     for (i = 0; i < str.length; i++) {
       let charCodeNum = str.charCodeAt(i);
 
+
       if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
         charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
       }
-      console.log(charCodeNum + ' ' + 'ｯ'.charCodeAt());
       if (charCodeNum === 'っ'.charCodeAt() || charCodeNum === 'ｯ'.charCodeAt()) {
         i++;
         charCodeNum = str.charCodeAt(i);
         if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
           charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
         }
-        console.log();
-        console.log(i !== str.length + ' ' + 'ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt())
-        console.log()
         if(i !== str.length && 'ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+          if(str.charAt(i + 1) == 'ﾞ') {
+            charCodeNum += 5 * 9;
+            i++;
+          } else if (str.charAt(i + 1) == 'ﾟ') {
+            charCodeNum += 5 * (9 + 1);
+            i++;
+          }
+          console.log('charCodeNum = ' + charCodeNum);
           charCodeNum -= 'ｧ'.charCodeAt();
           let return_alpha = half_of_charJA(charCodeNum);
           if(return_alpha.length !== 1) {
             result += return_alpha.charAt(0);
             result += return_alpha;
+            charCodeNum += 'ｧ'.charCodeAt();
           } else {
             result += 'xtu';
           }
+          
         } else if(i !== str.length && is_consonant(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt())) {
           result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt();
           console.log(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt());
@@ -166,11 +148,12 @@
           }
         }
       }
-
+      
       if (charCodeNum === ' '.charCodeAt() || charCodeNum === '　'.charCodeAt()) {
         result += ' ';
       } else if ('A'.charCodeAt() <= charCodeNum && charCodeNum <= 'z'.charCodeAt()) {
         result += str.charAt(i);
+        console.log('charNum = ' + charCodeNum + ' ' + i);
       } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
         result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
       } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
@@ -180,10 +163,10 @@
           charCodeNum += 5 * 9;
           i++;
         } else if (str.charAt(i + 1) == 'ﾟ') {
+          console.log('sec8 = ' + result);
           charCodeNum += 5 * (9 + 1);
           i++;
         }
-        console.log(charCodeNum);
         result += half_of_charJA(charCodeNum);
       } else {
         //TODO エラーしたことを示す何かを実装する
@@ -195,21 +178,7 @@
 
 
     console.log(result);
-    /*
-        //TODO っ の処理を実装
-        for(i = 0; i < result.length; i++) {
-          if(result.charAt(i) == '*') {
-            if(is_consonant(result.charAt(i + 1))) {
-              let temp = result.charAt(i + 1);
-              result.charAt(i) = temp;
-            } else {
-              //TODO 一文字後が子音じゃなかった時の処理を実装
-            }
-          }
-        }
-    
-    */
-
+  
 
     return result;
   }
@@ -242,7 +211,6 @@
           result += '　';
         }
       }
-      console.log(str.charAt(i));
     }
 
     return result;
