@@ -67,6 +67,22 @@
   }
 
 
+  //TODO 拗音の変換の実装
+
+  function chengeYouon_alpha(charNum, youonCharNum) {
+    const youonConsonant = ['', 'ky', 'sy', 'ch', 'ny', 'hy', 'my', '', 'ry', '', 'gy', 'j', '', '', 'by', 'py'];
+    const vowel = ['a', 'i', 'u', 'e', 'o'];
+    const vowel_y = ['a', 'u', 'o'];
+    let result = '';
+
+    result += youonConsonant[Math.floor(charNum / 5)];
+    result += vowel_y[youonCharNum];
+    console.log(charNum + ' ' + youonCharNum);
+    console.log('chengeYouon_alpha = ' + result);
+    return result;
+  }
+
+
 
 
   function chengeJA_Alpha(str) {
@@ -113,6 +129,7 @@
       if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
         charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
       }
+
       if (charCodeNum === 'っ'.charCodeAt() || charCodeNum === 'ｯ'.charCodeAt()) {
         i++;
         charCodeNum = str.charCodeAt(i);
@@ -149,6 +166,11 @@
         }
       }
       
+      let nextCharCodeNum = str.charCodeAt(i + 1);
+      
+
+
+
       if (charCodeNum === ' '.charCodeAt() || charCodeNum === '　'.charCodeAt()) {
         result += ' ';
       } else if ('A'.charCodeAt() <= charCodeNum && charCodeNum <= 'z'.charCodeAt()) {
@@ -167,7 +189,14 @@
           charCodeNum += 5 * (9 + 1);
           i++;
         }
-        result += half_of_charJA(charCodeNum);
+        let nextCharCodeNum = str.charCodeAt(i + 1);
+        console.log(charCodeNum + ' ' + nextCharCodeNum + ' flag');
+        if(nextCharCodeNum == 'ｬ'.charCodeAt() || nextCharCodeNum =='ｭ'.charCodeAt() || nextCharCodeNum =='ｮ'.charCodeAt()) {
+          result += chengeYouon_alpha(charCodeNum - 10, nextCharCodeNum - 'ｬ'.charCodeAt());
+          i++;
+        } else {
+          result += half_of_charJA(charCodeNum);
+        }
       } else {
         //TODO エラーしたことを示す何かを実装する
         console.log('error');
