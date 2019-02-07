@@ -187,9 +187,12 @@
         result += str.charAt(i);
         console.log('charNum = ' + charCodeNum + ' ' + i);
       } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
-        let nextChar = str.charAt(i + 1);
-        if(nextChar == 'ゃ' || nextChar == 'ゅ' || nextChar == 'ょ') {
-          result += chengeYouon_alpha_hira_kata(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()], roman_alphabet[nextChar.charCodeAt() - 'ぁ'.charCodeAt()]);
+        let nextChar = str.charAt(i + 1).charCodeAt();
+        if ('ァ'.charCodeAt() <= nextChar && nextChar <= 'ヶ'.charCodeAt()) {
+          nextChar -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
+        }
+        if(nextChar == 'ゃ'.charCodeAt() || nextChar == 'ゅ'.charCodeAt() || nextChar == 'ょ'.charCodeAt()) {
+          result += chengeYouon_alpha_hira_kata(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()], roman_alphabet[nextChar - 'ぁ'.charCodeAt()]);
           i++;
         } else {
           result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
