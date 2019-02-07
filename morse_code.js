@@ -286,10 +286,10 @@
       '・ーー', 'ー', 'ー・・ーー', 
       //ら行
       '・・', 'ーー', 'ー・ーー', 'ーー', '・ー・', 
-      //わ行+ん
-      'ー・', '・ー・・ー', '・ーー・・', '・ーー', '・ー・ー・', 
-      //濁点，半濁点
-      '・・', '・・ーー・'
+      //わ,を,ん
+      'ー・', /*'・ーー',*/ '・ー・ー・', 
+      //濁点，半濁点，長音
+      '・・', '・・ーー・', '・ーー・ー'
     ];
 
     let result = '';
@@ -303,7 +303,15 @@
       if('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
         if (charCodeNum < 10) {
-          //TODO 処理を実装
+          if(charCodeNum < 5) {
+            charCodeNum += 10;
+          } else if (charCodeNum < 8) {
+            charCodeNum += 40;
+          } else if (charCodeNum == 8) {
+            charCodeNum += 19;
+          } else if (charCodeNum == 9) {
+            charCodeNum += 48;
+          }
         }
         charCodeNum -= 10;
         result += japanese_morse[charCodeNum];
