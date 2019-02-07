@@ -266,6 +266,59 @@
     return result;
   }
 
+  function changeJA_morse(str) {
+    const japanese_morse = [
+      //あ行
+      'ーー・ーー', '・ー ', '・・ー', 'ー・ーーー', '・ー・・・',
+      //か行
+      '・ー・', 'ー・ー・・', '・・・ー', 'ー・ーー', 'ーーーー', 
+      //さ行
+      'ー・ー・ー', 'ーー・ー・', 'ーーー・ー', '・ーーー・', 'ーーー', 
+      //た行
+      'ー', '・・ー', '・ーー', '・ー・ーー', '・・ー・', 
+      //な行
+      '・ー', 'ー・ー', '・・・', 'ーー・', '・・ーー', 
+      //は行
+      'ー・・', 'ーー・・ー', 'ーー・・', '・', 'ー・', 
+      //ま行
+      'ー・・ー', '・・ー・ー', 'ー', 'ー・・・ー', 'ー・・ー・', 
+      //や行
+      '・ーー', 'ー', 'ー・・ーー', 
+      //ら行
+      '・・', 'ーー', 'ー・ーー', 'ーー', '・ー・', 
+      //わ行+ん
+      'ー・', '・ー・・ー', '・ーー・・', '・ーー', '・ー・ー・', 
+      //濁点，半濁点
+      '・・', '・・ーー・'
+    ];
+
+    let result = '';
+    console.log(result);
+
+    let i;
+    for(i = 0; i < str.length; i++) {
+      
+      let charCodeNum = str.charCodeAt(i);
+
+      if('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+        charCodeNum -= 'ｧ'.charCodeAt();
+        if (charCodeNum < 10) {
+          //TODO 処理を実装
+        }
+        charCodeNum -= 10;
+        result += japanese_morse[charCodeNum];
+        if (i != str.length - 1) {
+          result += '　'
+        }
+      }
+
+
+
+
+    }
+    return result;
+
+  }
 
   function removeAllChildren(element) {
     while (element.firstChild) {
@@ -279,28 +332,29 @@
     let chengeCharJA_alpha;
 
 
-
+    let result = null;
     if (morseOptionValue == 'european') {
       
       //console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
       console.log(inputText);
+      result = chengeAlpha_Morse(chengeJA_Alpha(inputText));
   
   
-      removeAllChildren(resultDivided);
-      const header = document.createElement('h3');
-      header.innerText = '変換結果';
-      resultDivided.appendChild(header);
-  
-  
-      const paragraph = document.createElement('p');
-      const result = chengeAlpha_Morse(chengeJA_Alpha(inputText));
-      paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
-      resultDivided.appendChild(paragraph);
-  
+      
       //console.log(chengeJA_Alpha(inputText));
     } else if (morseOptionValue == 'japnese') {
       //TODO 和文のモールス信号のしょりを実装
+      result = changeJA_morse(inputText);
     }
+    removeAllChildren(resultDivided);
+    const header = document.createElement('h3');
+    header.innerText = '変換結果';
+    resultDivided.appendChild(header);
+
+
+    const paragraph = document.createElement('p');
+    paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
+    resultDivided.appendChild(paragraph);
     
     
 
