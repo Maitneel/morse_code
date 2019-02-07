@@ -4,6 +4,7 @@
   const inputTextBox = document.getElementById('input_text');
   const encodeButton = document.getElementById('encode_button');
   const resultDivided = document.getElementById('result-area');
+  const morseOption = document.getElementById('select-option');
 
   function is_consonant(char) {
     if (char == 'a' || char == 'i' || char == 'u' || char == 'e' || char == 'o') {
@@ -274,24 +275,34 @@
 
   encodeButton.onclick = () => {
     let inputText = inputTextBox.value;
+    let morseOptionValue = morseOption.value;
     let chengeCharJA_alpha;
 
-    //console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
-    console.log(inputText);
 
 
-    removeAllChildren(resultDivided);
-    const header = document.createElement('h3');
-    header.innerText = '変換結果';
-    resultDivided.appendChild(header);
-
-
-    const paragraph = document.createElement('p');
-    const result = chengeAlpha_Morse(chengeJA_Alpha(inputText));
-    paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
-    resultDivided.appendChild(paragraph);
-
-    //console.log(chengeJA_Alpha(inputText));
+    if (morseOptionValue == 'european') {
+      
+      //console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
+      console.log(inputText);
+  
+  
+      removeAllChildren(resultDivided);
+      const header = document.createElement('h3');
+      header.innerText = '変換結果';
+      resultDivided.appendChild(header);
+  
+  
+      const paragraph = document.createElement('p');
+      const result = chengeAlpha_Morse(chengeJA_Alpha(inputText));
+      paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
+      resultDivided.appendChild(paragraph);
+  
+      //console.log(chengeJA_Alpha(inputText));
+    } else if (morseOptionValue == 'japnese') {
+      //TODO 和文のモールス信号のしょりを実装
+    }
+    
+    
 
   }
 
