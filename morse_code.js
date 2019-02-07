@@ -82,7 +82,17 @@
     return result;
   }
 
-
+  function chengeYouon_alpha_hira_kata(char, youonChar) {
+    let result = '';
+    if(char == 'chi') {
+      result += 'ch' + youonChar.charAt(2);
+    } else if (char == 'ji') {
+      result += 'j' + youonChar.charAt(2);
+    } else {
+      result += char.charAt(0) + 'y' + youonChar.charAt(2);
+    }
+    return result;
+  }
 
 
   function chengeJA_Alpha(str) {
@@ -177,7 +187,14 @@
         result += str.charAt(i);
         console.log('charNum = ' + charCodeNum + ' ' + i);
       } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
-        result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
+        let nextChar = str.charAt(i + 1);
+        if(nextChar == 'ゃ' || nextChar == 'ゅ' || nextChar == 'ょ') {
+          result += chengeYouon_alpha_hira_kata(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()], roman_alphabet[nextChar.charCodeAt() - 'ぁ'.charCodeAt()]);
+          i++;
+        } else {
+          result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
+        }
+        
       } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
         //TODO 半角カタカナのときの処理を実装(関数化してその関数を呼び出すのが良いと思う。)
@@ -271,7 +288,7 @@
     paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
     resultDivided.appendChild(paragraph);
 
-    console.log(chengeJA_Alpha(inputText));
+    //console.log(chengeJA_Alpha(inputText));
 
   }
 
