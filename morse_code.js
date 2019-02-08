@@ -36,17 +36,17 @@
       //実装する必要がある文字
       //しちつふ
 
-      if(charNum == 11) {
+      if (charNum == 11) {
         result += 'shi';
       } else if (charNum == 16) {
         result += 'chi';
       } else if (charNum == 17) {
-        result += 'thu'; 
+        result += 'thu';
       } else if (charNum == 27) {
         result += 'fu';
-      } 
+      }
 
-        else {
+      else {
         result += consonant[Math.floor(charNum / 5)];
         if (Math.floor(charNum / 5) === 7) {
           result += vowel_y[charNum % 5];
@@ -85,7 +85,7 @@
 
   function chengeYouon_alpha_hira_kata(char, youonChar) {
     let result = '';
-    if(char == 'chi') {
+    if (char == 'chi') {
       result += 'ch' + youonChar.charAt(2);
     } else if (char == 'ji') {
       result += 'j' + youonChar.charAt(2);
@@ -128,7 +128,7 @@
       //んゔゕゖ
       'n', 'vu', 'xka', 'xke'
     ];
-    
+
 
 
     let i;
@@ -147,8 +147,8 @@
         if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
           charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
         }
-        if(i !== str.length && 'ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
-          if(str.charAt(i + 1) == 'ﾞ') {
+        if (i !== str.length && 'ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+          if (str.charAt(i + 1) == 'ﾞ') {
             charCodeNum += 5 * 9;
             i++;
           } else if (str.charAt(i + 1) == 'ﾟ') {
@@ -158,27 +158,27 @@
           console.log('charCodeNum = ' + charCodeNum);
           charCodeNum -= 'ｧ'.charCodeAt();
           let return_alpha = half_of_charJA(charCodeNum);
-          if(return_alpha.length !== 1) {
+          if (return_alpha.length !== 1) {
             result += return_alpha.charAt(0);
             result += return_alpha;
             charCodeNum += 'ｧ'.charCodeAt();
           } else {
             result += 'xtu';
           }
-          
-        } else if(i !== str.length && is_consonant(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt())) {
+
+        } else if (i !== str.length && is_consonant(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt())) {
           result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt();
           console.log(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt());
         } else {
           result += 'xtu';
-          if(i === str.length) {
+          if (i === str.length) {
             break;
           }
         }
       }
-      
+
       let nextCharCodeNum = str.charCodeAt(i + 1);
-      
+
 
 
 
@@ -192,17 +192,17 @@
         if ('ァ'.charCodeAt() <= nextChar && nextChar <= 'ヶ'.charCodeAt()) {
           nextChar -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
         }
-        if(nextChar == 'ゃ'.charCodeAt() || nextChar == 'ゅ'.charCodeAt() || nextChar == 'ょ'.charCodeAt()) {
+        if (nextChar == 'ゃ'.charCodeAt() || nextChar == 'ゅ'.charCodeAt() || nextChar == 'ょ'.charCodeAt()) {
           result += chengeYouon_alpha_hira_kata(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()], roman_alphabet[nextChar - 'ぁ'.charCodeAt()]);
           i++;
         } else {
           result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
         }
-        
+
       } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
         //TODO 半角カタカナのときの処理を実装(関数化してその関数を呼び出すのが良いと思う。)
-        if(str.charAt(i + 1 ) == 'ﾞ') {
+        if (str.charAt(i + 1) == 'ﾞ') {
           charCodeNum += 5 * 9;
           i++;
         } else if (str.charAt(i + 1) == 'ﾟ') {
@@ -212,7 +212,7 @@
         }
         let nextCharCodeNum = str.charCodeAt(i + 1);
         console.log(charCodeNum + ' ' + nextCharCodeNum + ' flag');
-        if(nextCharCodeNum == 'ｬ'.charCodeAt() || nextCharCodeNum =='ｭ'.charCodeAt() || nextCharCodeNum =='ｮ'.charCodeAt()) {
+        if (nextCharCodeNum == 'ｬ'.charCodeAt() || nextCharCodeNum == 'ｭ'.charCodeAt() || nextCharCodeNum == 'ｮ'.charCodeAt()) {
           result += chengeYouon_alpha(charCodeNum - 10, nextCharCodeNum - 'ｬ'.charCodeAt());
           i++;
         } else {
@@ -228,7 +228,7 @@
 
 
     console.log(result);
-  
+
 
     return result;
   }
@@ -266,28 +266,58 @@
     return result;
   }
 
-  function changeJA_morse(str) {
+  function chengeHalf_full(charNum) {
+    charNum -= 'ぁ'.charCodeAt();
+    const half_full = [
+      //あ行
+      'ｧ', 'ｱ', 'ｨ', 'ｲ', 'ｩ', 'ｳ', 'ｪ', 'ｴ', 'ｫ', 'ｵ',
+      //か行
+      'ｶ', 'ｶﾞ', 'ｷ', 'ｷﾞ', 'ｸ', 'ｹﾞ', 'ｹ', 'ｹﾞ', 'ｺ', 'ｺﾞ',
+      //さ行
+      'ｻ', 'ｻﾞ', 'ｼ', 'ｼﾞ', 'ｽ', 'ｽﾞ', 'ｾ', 'ｾﾞ', 'ｿ', 'ｿﾞ',
+      //た行
+      'ﾀ', 'ﾀﾞ', 'ﾁ', 'ﾁﾞ', 'ｯ', 'ﾂ', 'ﾂﾞ', 'ﾃ', 'ﾃﾞ', 'ﾄ', 'ﾄﾞ',
+      //な行
+      'ﾅ', 'ﾆ', 'ﾇ', 'ﾈ', 'ﾉ',
+      //は行
+      'ﾊ', 'ﾊﾞ', 'ﾊﾟ', 'ﾋ', 'ﾋﾞ', 'ﾋﾟ', 'ﾌ', 'ﾌﾞ', 'ﾌﾟ', 'ﾍ', 'ﾍﾞ', 'ﾍﾟ', 'ﾎ', 'ﾎﾞ', 'ﾎﾟ',
+      //ま行
+      'ﾏ', 'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ',
+      //や行
+      'ｬ', 'ﾔ', 'ｭ', 'ﾕ', 'ｮ', 'ﾖ',
+      //ら行
+      'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ',
+      //わ行
+      'ヮ', 'ﾜ', 'ｲ', 'ｴ', 'ｦ', 'ﾝ',
+    ]
+
+    return half_full[charNum];
+
+  }
+
+
+  function changeHalfKata_morse(charCodeNum) {
     const japanese_morse = [
       //あ行
       'ーー・ーー', '・ー ', '・・ー', 'ー・ーーー', '・ー・・・',
       //か行
-      '・ー・', 'ー・ー・・', '・・・ー', 'ー・ーー', 'ーーーー', 
+      '・ー・', 'ー・ー・・', '・・・ー', 'ー・ーー', 'ーーーー',
       //さ行
-      'ー・ー・ー', 'ーー・ー・', 'ーーー・ー', '・ーーー・', 'ーーー', 
+      'ー・ー・ー', 'ーー・ー・', 'ーーー・ー', '・ーーー・', 'ーーー',
       //た行
-      'ー', '・・ー', '・ーー', '・ー・ーー', '・・ー・', 
+      'ー', '・・ー', '・ーー', '・ー・ーー', '・・ー・',
       //な行
-      '・ー', 'ー・ー', '・・・', 'ーー・', '・・ーー', 
+      '・ー', 'ー・ー', '・・・', 'ーー・', '・・ーー',
       //は行
-      'ー・・', 'ーー・・ー', 'ーー・・', '・', 'ー・', 
+      'ー・・', 'ーー・・ー', 'ーー・・', '・', 'ー・',
       //ま行
-      'ー・・ー', '・・ー・ー', 'ー', 'ー・・・ー', 'ー・・ー・', 
+      'ー・・ー', '・・ー・ー', 'ー', 'ー・・・ー', 'ー・・ー・',
       //や行
-      '・ーー', 'ー', 'ー・・ーー', 
+      '・ーー', 'ー', 'ー・・ーー',
       //ら行
-      '・・', 'ーー', 'ー・ーー', 'ーー', '・ー・', 
+      '・・', 'ーー', 'ー・ーー', 'ーー', '・ー・',
       //わ,を,ん
-      'ー・', /*'・ーー',*/ '・ー・ー・', 
+      'ー・', /*'・ーー',*/ '・ー・ー・',
       //濁点，半濁点，長音
       '・・', '・・ーー・', '・ーー・ー'
     ];
@@ -295,38 +325,55 @@
     let result = '';
     console.log(result);
 
-    let i;
-    for(i = 0; i < str.length; i++) {
-      
-      let charCodeNum = str.charCodeAt(i);
+    //TODO半角カタカナをモールスにする処理を関数化し，それを呼び出すように変更する。
 
-      if('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
-        charCodeNum -= 'ｧ'.charCodeAt();
-        if (charCodeNum < 10) {
-          if(charCodeNum < 5) {
-            charCodeNum += 10;
-          } else if (charCodeNum < 8) {
-            charCodeNum += 40;
-          } else if (charCodeNum == 8) {
-            charCodeNum += 19;
-          } else if (charCodeNum == 9) {
-            charCodeNum += 48;
-          }
+    charCodeNum -= 'ｧ'.charCodeAt();
+    if (charCodeNum < 10) {
+      if (charCodeNum < 5) {
+        charCodeNum += 10;
+      } else if (charCodeNum < 8) {
+        charCodeNum += 40;
+      } else if (charCodeNum == 8) {
+        charCodeNum += 19;
+      } else if (charCodeNum == 9) {
+        charCodeNum += 48;
+      }
+    }
+    charCodeNum -= 10;
+    result += japanese_morse[charCodeNum];
+    return result;
+
+  }
+
+  function changeJA_morse(str) {
+    let result = '';
+
+      let i;
+      for(i = 0; i < str.length; i++) {
+        let charCodeNum = str.charCodeAt(i);
+
+        if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+          result += changeHalfKata_morse(charCodeNum);
+        } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ん'.charCodeAt()) {
+          result += changeHalfKata_morse(chengeHalf_full(charCodeNum));
+        } else if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ン'.charCodeAt()) {
+          charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
+          result += changeHalfKata_morse(chengeHalf_full(charCodeNum));
         }
-        charCodeNum -= 10;
-        result += japanese_morse[charCodeNum];
         if (i != str.length - 1) {
           result += '　'
         }
       }
 
+      //TODO半角カタカナをモールスにする処理を関数化し，それを呼び出すように変更する。
 
 
-
-    }
     return result;
-
   }
+
+
+
+
 
   function removeAllChildren(element) {
     while (element.firstChild) {
@@ -342,13 +389,13 @@
 
     let result = null;
     if (morseOptionValue == 'european') {
-      
+
       //console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
       console.log(inputText);
       result = chengeAlpha_Morse(chengeJA_Alpha(inputText));
-  
-  
-      
+
+
+
       //console.log(chengeJA_Alpha(inputText));
     } else if (morseOptionValue == 'japnese') {
       //TODO 和文のモールス信号のしょりを実装
@@ -363,8 +410,8 @@
     const paragraph = document.createElement('p');
     paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
     resultDivided.appendChild(paragraph);
-    
-    
+
+
 
   }
 
