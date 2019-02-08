@@ -266,37 +266,39 @@
     return result;
   }
 
-  function chengeHalf_full(charNum) {
+  function chengeFull_half(charNum) {
     charNum -= 'ぁ'.charCodeAt();
-    const half_full = [
+    const full_half = [
       //あ行
-      'ｧ', 'ｱ', 'ｨ', 'ｲ', 'ｩ', 'ｳ', 'ｪ', 'ｴ', 'ｫ', 'ｵ',
+      'ｧ', 'ｱ', 'ｨ', 'ｲ', 'ｩ', 'ｳ', 'ｪ', 'ｴ', 'ｫ', 'ｵ',
       //か行
-      'ｶ', 'ｶﾞ', 'ｷ', 'ｷﾞ', 'ｸ', 'ｹﾞ', 'ｹ', 'ｹﾞ', 'ｺ', 'ｺﾞ',
+      'ｶ', 'ｶﾞ', 'ｷ', 'ｷﾞ', 'ｸ', 'ｹﾞ', 'ｹ', 'ｹﾞ', 'ｺ', 'ｺﾞ',
       //さ行
-      'ｻ', 'ｻﾞ', 'ｼ', 'ｼﾞ', 'ｽ', 'ｽﾞ', 'ｾ', 'ｾﾞ', 'ｿ', 'ｿﾞ',
+      'ｻ', 'ｻﾞ', 'ｼ', 'ｼﾞ', 'ｽ', 'ｽﾞ', 'ｾ', 'ｾﾞ', 'ｿ', 'ｿﾞ',
       //た行
-      'ﾀ', 'ﾀﾞ', 'ﾁ', 'ﾁﾞ', 'ｯ', 'ﾂ', 'ﾂﾞ', 'ﾃ', 'ﾃﾞ', 'ﾄ', 'ﾄﾞ',
+      'ﾀ', 'ﾀﾞ', 'ﾁ', 'ﾁﾞ', 'ｯ', 'ﾂ', 'ﾂﾞ', 'ﾃ', 'ﾃﾞ', 'ﾄ', 'ﾄﾞ',
       //な行
-      'ﾅ', 'ﾆ', 'ﾇ', 'ﾈ', 'ﾉ',
+      'ﾅ', 'ﾆ', 'ﾇ', 'ﾈ', 'ﾉ',
       //は行
-      'ﾊ', 'ﾊﾞ', 'ﾊﾟ', 'ﾋ', 'ﾋﾞ', 'ﾋﾟ', 'ﾌ', 'ﾌﾞ', 'ﾌﾟ', 'ﾍ', 'ﾍﾞ', 'ﾍﾟ', 'ﾎ', 'ﾎﾞ', 'ﾎﾟ',
+      'ﾊ', 'ﾊﾞ', 'ﾊﾟ', 'ﾋ', 'ﾋﾞ', 'ﾋﾟ', 'ﾌ', 'ﾌﾞ', 'ﾌﾟ', 'ﾍ', 'ﾍﾞ', 'ﾍﾟ', 'ﾎ', 'ﾎﾞ', 'ﾎﾟ',
       //ま行
-      'ﾏ', 'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ',
+      'ﾏ', 'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ',
       //や行
-      'ｬ', 'ﾔ', 'ｭ', 'ﾕ', 'ｮ', 'ﾖ',
+      'ｬ', 'ﾔ', 'ｭ', 'ﾕ', 'ｮ', 'ﾖ',
       //ら行
-      'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ',
+      'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ',
       //わ行
-      'ヮ', 'ﾜ', 'ｲ', 'ｴ', 'ｦ', 'ﾝ',
+      'ヮ', 'ﾜ', 'ｲ', 'ｴ', 'ｦ', 'ﾝ'
     ]
 
-    return half_full[charNum];
+
+    return full_half[charNum];
+
 
   }
 
 
-  function changeHalfKata_morse(charCodeNum) {
+  function changeHalfKata_morse(char) {
     const japanese_morse = [
       //あ行
       'ーー・ーー', '・ー ', '・・ー', 'ー・ーーー', '・ー・・・',
@@ -323,11 +325,9 @@
     ];
 
     let result = '';
-    console.log(result);
+    let charCodeNum = char.charCodeAt() - 'ｧ'.charCodeAt();
 
     //TODO半角カタカナをモールスにする処理を関数化し，それを呼び出すように変更する。
-
-    charCodeNum -= 'ｧ'.charCodeAt();
     if (charCodeNum < 10) {
       if (charCodeNum < 5) {
         charCodeNum += 10;
@@ -341,6 +341,7 @@
     }
     charCodeNum -= 10;
     result += japanese_morse[charCodeNum];
+
     return result;
 
   }
@@ -351,14 +352,15 @@
       let i;
       for(i = 0; i < str.length; i++) {
         let charCodeNum = str.charCodeAt(i);
+        let charCode = str.charAt(i);
 
         if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
-          result += changeHalfKata_morse(charCodeNum);
+          result += changeHalfKata_morse(charCode);
         } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ん'.charCodeAt()) {
-          result += changeHalfKata_morse(chengeHalf_full(charCodeNum));
+          result += changeHalfKata_morse(chengeFull_half(charCodeNum));
         } else if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ン'.charCodeAt()) {
           charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
-          result += changeHalfKata_morse(chengeHalf_full(charCodeNum));
+          result += changeHalfKata_morse(chengeFull_half(charCodeNum));
         }
         if (i != str.length - 1) {
           result += '　'
@@ -387,7 +389,7 @@
     let chengeCharJA_alpha;
 
 
-    let result = null;
+    let result = '';
     if (morseOptionValue == 'european') {
 
       //console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
