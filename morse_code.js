@@ -16,10 +16,6 @@
     }
   }
 
-  function is_vowe(char) {
-    return (!is_consonant(char));
-  }
-
   function output(tag, format, output_message) {
     const format_tag = document.createElement(format);
     format_tag.innerText = output_message;
@@ -27,15 +23,12 @@
     return 0;
   }
 
-
   function output_error_message(error_char) {
-    console.log('output_error_message ' + error_char);
     removeAllChildren(resultHeader);
     output(resultHeader, 'h3', 'エラー');
     output(resultContents, 'p', '"' + error_char + '"は変換できません。');
     return 0;
   }
-
 
   function half_of_charJA(charNum) {
     const consonant = ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w', 'g', 'z', 'd', '', 'b', 'p'];
@@ -49,11 +42,6 @@
         charNum += 2;
       }
 
-      //TODO 濁点，半濁点についての実装
-      //TODO ヘボン式が違う時の処理を実装
-      //実装する必要がある文字
-      //しちつふ
-
       if (charNum == 11) {
         result += 'shi';
       } else if (charNum == 16) {
@@ -62,9 +50,7 @@
         result += 'thu';
       } else if (charNum == 27) {
         result += 'fu';
-      }
-
-      else {
+      } else {
         result += consonant[Math.floor(charNum / 5)];
         if (Math.floor(charNum / 5) === 7) {
           result += vowel_y[charNum % 5];
@@ -85,19 +71,13 @@
     return result;
   }
 
-
-  //TODO 拗音の変換の実装
-
   function chengeYouon_alpha(charNum, youonCharNum) {
     const youonConsonant = ['', 'ky', 'sy', 'ch', 'ny', 'hy', 'my', '', 'ry', '', 'gy', 'j', '', '', 'by', 'py'];
-    const vowel = ['a', 'i', 'u', 'e', 'o'];
     const vowel_y = ['a', 'u', 'o'];
     let result = '';
 
     result += youonConsonant[Math.floor(charNum / 5)];
     result += vowel_y[youonCharNum];
-    console.log(charNum + ' ' + youonCharNum);
-    console.log('chengeYouon_alpha = ' + result);
     return result;
   }
 
@@ -113,15 +93,9 @@
     return result;
   }
 
-
   function chengeJA_Alpha(str) {
     let can_chenge = true;
     let result = '';
-
-    //TODO 引数charが全角カタカナだった場合ひらがなに変換する処理を実装
-    //TODO 引数charが半角カタカナだった場合ひらがなに変換する処理を実装
-    //TODO 引数をアルファベットに変換する処理を実装
-    //TODO? めんどくさそうなのでやるかわからないが，ヘボン式にする処理を実装するかも?
 
     const roman_alphabet = [
       //ぁあぃいぅうぇえぉお
@@ -148,13 +122,9 @@
       'n', 'vu', 'xka', 'xke'
     ];
 
-
-
     let i;
-
     for (i = 0; i < str.length; i++) {
       let charCodeNum = str.charCodeAt(i);
-
 
       if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
         charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
@@ -174,7 +144,6 @@
             charCodeNum += 5 * (9 + 1);
             i++;
           }
-          console.log('charCodeNum = ' + charCodeNum);
           charCodeNum -= 'ｧ'.charCodeAt();
           let return_alpha = half_of_charJA(charCodeNum);
           if (return_alpha.length !== 1) {
@@ -196,16 +165,10 @@
         }
       }
 
-      let nextCharCodeNum = str.charCodeAt(i + 1);
-
-
-
-
       if (charCodeNum === ' '.charCodeAt() || charCodeNum === '　'.charCodeAt()) {
         result += ' ';
       } else if ('A'.charCodeAt() <= charCodeNum && charCodeNum <= 'z'.charCodeAt()) {
         result += str.charAt(i);
-        console.log('charNum = ' + charCodeNum + ' ' + i);
       } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ゖ'.charCodeAt()) {
         let nextChar = str.charAt(i + 1).charCodeAt();
         if ('ァ'.charCodeAt() <= nextChar && nextChar <= 'ヶ'.charCodeAt()) {
@@ -220,17 +183,14 @@
 
       } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
-        //TODO 半角カタカナのときの処理を実装(関数化してその関数を呼び出すのが良いと思う。)
         if (str.charAt(i + 1) == 'ﾞ') {
           charCodeNum += 5 * 9;
           i++;
         } else if (str.charAt(i + 1) == 'ﾟ') {
-          console.log('sec8 = ' + result);
           charCodeNum += 5 * (9 + 1);
           i++;
         }
         let nextCharCodeNum = str.charCodeAt(i + 1);
-        console.log(charCodeNum + ' ' + nextCharCodeNum + ' flag');
         if (nextCharCodeNum == 'ｬ'.charCodeAt() || nextCharCodeNum == 'ｭ'.charCodeAt() || nextCharCodeNum == 'ｮ'.charCodeAt()) {
           result += chengeYouon_alpha(charCodeNum - 10, nextCharCodeNum - 'ｬ'.charCodeAt());
           i++;
@@ -240,13 +200,8 @@
       } else {
         output_error_message(str.charAt(i));
         can_chenge = false;
-
-
       }
     }
-
-
-    console.log(result);
 
     if(can_chenge) {
       return result;
@@ -346,10 +301,11 @@
       '・・', '・・ーー・', '・ーー・ー'
     ];
 
+    //TODO'を'の処理を実装
+
     let result = '';
     let charCodeNum = char.charCodeAt() - 'ｧ'.charCodeAt();
 
-    //TODO半角カタカナをモールスにする処理を関数化し，それを呼び出すように変更する。
     if (charCodeNum < 10) {
       if (charCodeNum < 5) {
         charCodeNum += 10;
@@ -393,8 +349,6 @@
       }
     }
 
-    //TODO半角カタカナをモールスにする処理を関数化し，それを呼び出すように変更する。
-
     if(can_chenge) {
       return result;
     } else {
@@ -402,10 +356,6 @@
     
     }
   }
-
-
-
-
 
   function removeAllChildren(element) {
     while (element.firstChild) {
@@ -416,7 +366,6 @@
   encodeButton.onclick = () => {
     let inputText = inputTextBox.value;
     let morseOptionValue = morseOption.value;
-    let chengeCharJA_alpha;
 
     if (inputText.length == 0) {
       return 0;
@@ -427,38 +376,16 @@
 
     let result = '';
     if (morseOptionValue == 'european') {
-
-      //console.log(chengeAlpha_Morse(chengeJA_Alpha(inputText)));
-      console.log(inputText);
       result = chengeAlpha_Morse(chengeJA_Alpha(inputText));
-
-
-
-      //console.log(chengeJA_Alpha(inputText));
     } else if (morseOptionValue == 'japnese') {
-      //TODO 和文のモールス信号のしょりを実装
       result = changeJA_morse(inputText);
     }
-    /*
-    const header = document.createElement('h3');
-    header.innerText = '変換結果';
-    resultDivided.appendChild(header);
-
-    const paragraph = document.createElement('p');
-    paragraph.innerText = 'テストtest';
-    resultContents.appendChild(paragraph);
-    console.log(paragraph);
-
-    */
-    console.log(result);
     if (!result) {
       return 0;
     }
-    
 
     output(resultHeader, 'h3', '変換結果');
     output(resultContents, 'p', inputText + ' をモールス信号に変換すると " ' + result + ' " です。');
-    //output_error_message(inputText);
   }
 
   inputTextBox.onkeydown = (event) => {
