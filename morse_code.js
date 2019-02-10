@@ -301,8 +301,6 @@
       '・・', '・・ーー・', '・ーー・ー'
     ];
 
-    //TODO'を'の処理を実装
-
     let result = '';
     let charCodeNum = char.charCodeAt() - 'ｧ'.charCodeAt();
 
@@ -333,10 +331,9 @@
       let charCodeNum = str.charCodeAt(i);
       let charCode = str.charAt(i);
 
-      if (charCodeNum == 'ｦ'.charCode() || charCodeNum == 'ヲ'.charCodeAt() || 'を'.charCodeAt()) {
-        result += ''; //TODO
-      }
-      if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+      if (charCodeNum == 'ｦ'.charCodeAt() || charCodeNum == 'ヲ'.charCodeAt() || 'を'.charCodeAt()) {
+        result += '・ーーー'; 
+      } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         result += changeHalfKata_morse(charCode);
       } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ん'.charCodeAt()) {
         result += changeHalfKata_morse(chengeFull_half(charCodeNum));
