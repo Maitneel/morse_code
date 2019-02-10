@@ -3,8 +3,10 @@
 
   const inputTextBox = document.getElementById('input_text');
   const encodeButton = document.getElementById('encode_button');
-  const resultDivided = document.getElementById('result-area');
   const morseOption = document.getElementById('select-option');
+  const resultDivided = document.getElementById('result-area');
+  const resultHeader = document.getElementById('header');
+  const resultContents = document.getElementById('contents');
 
   function is_consonant(char) {
     if (char == 'a' || char == 'i' || char == 'u' || char == 'e' || char == 'o') {
@@ -18,18 +20,19 @@
     return (!is_consonant(char));
   }
 
-  function output(format, output_message) {
+  function output(tag, format, output_message) {
     const format_tag = document.createElement(format);
     format_tag.innerText = output_message;
-    resultDivided.appendChild(format_tag);
+    tag.appendChild(format_tag);
     return 0;
   }
 
 
   function output_error_message(error_char) {
-    removeAllChildren();
-    output(h3, "エラー");
-    output(p, error_char + "は変換できません。");
+    console.log('output_error_message ' + error_char);
+    removeAllChildren(resultHeader);
+    output(resultHeader, 'h3', 'エラー');
+    output(resultContents, 'p', '"' + error_char + '"は変換できません。');
     return 0;
   }
 
@@ -112,6 +115,7 @@
 
 
   function chengeJA_Alpha(str) {
+    let can_chenge = true;
     let result = '';
 
     //TODO 引数charが全角カタカナだった場合ひらがなに変換する処理を実装
@@ -234,9 +238,9 @@
           result += half_of_charJA(charCodeNum);
         }
       } else {
-        //TODO エラーしたことを示す何かを実装する
-        console.log('error');
-        console.log(charCodeNum);
+        output_error_message(str.charAt(i));
+        can_chenge = false;
+
 
       }
     }
@@ -244,8 +248,11 @@
 
     console.log(result);
 
-
-    return result;
+    if(can_chenge) {
+      return result;
+    } else {
+      return false;
+    }
   }
 
   function chengeAlpha_Morse(str) {
@@ -363,6 +370,7 @@
 
   function changeJA_morse(str) {
     let result = '';
+    let can_chenge = true;
 
     let i;
     for (i = 0; i < str.length; i++) {
@@ -377,7 +385,8 @@
         charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
         result += changeHalfKata_morse(chengeFull_half(charCodeNum));
       } else {
-        return ""
+        output_error_message(str.charAt(i));
+        can_chenge = false;
       }
       if (i != str.length - 1) {
         result += '　'
@@ -386,8 +395,12 @@
 
     //TODO半角カタカナをモールスにする処理を関数化し，それを呼び出すように変更する。
 
-
-    return result;
+    if(can_chenge) {
+      return result;
+    } else {
+      return false;
+    
+    }
   }
 
 
@@ -409,6 +422,8 @@
       return 0;
     }
 
+    removeAllChildren(resultHeader);
+    removeAllChildren(resultContents);
 
     let result = '';
     if (morseOptionValue == 'european') {
@@ -424,20 +439,26 @@
       //TODO 和文のモールス信号のしょりを実装
       result = changeJA_morse(inputText);
     }
-    removeAllChildren(resultDivided);
     /*
     const header = document.createElement('h3');
     header.innerText = '変換結果';
     resultDivided.appendChild(header);
 
-
-    paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
     const paragraph = document.createElement('p');
-    resultDivided.appendChild(paragraph);
-    */
-    output('h3', '変換結果');
-    output('p', inputText + ' をモールス信号に変換すると " ' + result + ' " です。');
+    paragraph.innerText = 'テストtest';
+    resultContents.appendChild(paragraph);
+    console.log(paragraph);
 
+    */
+    console.log(result);
+    if (!result) {
+      return 0;
+    }
+    
+
+    output(resultHeader, 'h3', '変換結果');
+    output(resultContents, 'p', inputText + ' をモールス信号に変換すると " ' + result + ' " です。');
+    //output_error_message(inputText);
   }
 
   inputTextBox.onkeydown = (event) => {
