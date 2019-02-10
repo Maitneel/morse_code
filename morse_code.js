@@ -18,6 +18,21 @@
     return (!is_consonant(char));
   }
 
+  function output(format, output_message) {
+    const format_tag = document.createElement(format);
+    format_tag.innerText = output_message;
+    resultDivided.appendChild(format_tag);
+    return 0;
+  }
+
+
+  function output_error_message(error_char) {
+    removeAllChildren();
+    output(h3, "エラー");
+    output(p, error_char + "は変換できません。");
+    return 0;
+  }
+
 
   function half_of_charJA(charNum) {
     const consonant = ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w', 'g', 'z', 'd', '', 'b', 'p'];
@@ -349,25 +364,27 @@
   function changeJA_morse(str) {
     let result = '';
 
-      let i;
-      for(i = 0; i < str.length; i++) {
-        let charCodeNum = str.charCodeAt(i);
-        let charCode = str.charAt(i);
+    let i;
+    for (i = 0; i < str.length; i++) {
+      let charCodeNum = str.charCodeAt(i);
+      let charCode = str.charAt(i);
 
-        if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
-          result += changeHalfKata_morse(charCode);
-        } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ん'.charCodeAt()) {
-          result += changeHalfKata_morse(chengeFull_half(charCodeNum));
-        } else if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ン'.charCodeAt()) {
-          charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
-          result += changeHalfKata_morse(chengeFull_half(charCodeNum));
-        }
-        if (i != str.length - 1) {
-          result += '　'
-        }
+      if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+        result += changeHalfKata_morse(charCode);
+      } else if ('ぁ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ん'.charCodeAt()) {
+        result += changeHalfKata_morse(chengeFull_half(charCodeNum));
+      } else if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ン'.charCodeAt()) {
+        charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
+        result += changeHalfKata_morse(chengeFull_half(charCodeNum));
+      } else {
+        return ""
       }
+      if (i != str.length - 1) {
+        result += '　'
+      }
+    }
 
-      //TODO半角カタカナをモールスにする処理を関数化し，それを呼び出すように変更する。
+    //TODO半角カタカナをモールスにする処理を関数化し，それを呼び出すように変更する。
 
 
     return result;
@@ -388,6 +405,10 @@
     let morseOptionValue = morseOption.value;
     let chengeCharJA_alpha;
 
+    if (inputText.length == 0) {
+      return 0;
+    }
+
 
     let result = '';
     if (morseOptionValue == 'european') {
@@ -404,16 +425,18 @@
       result = changeJA_morse(inputText);
     }
     removeAllChildren(resultDivided);
+    /*
     const header = document.createElement('h3');
     header.innerText = '変換結果';
     resultDivided.appendChild(header);
 
 
-    const paragraph = document.createElement('p');
     paragraph.innerText = inputText + ' をモールス信号に変換すると " ' + result + ' " です。'
+    const paragraph = document.createElement('p');
     resultDivided.appendChild(paragraph);
-
-
+    */
+    output('h3', '変換結果');
+    output('p', inputText + ' をモールス信号に変換すると " ' + result + ' " です。');
 
   }
 
