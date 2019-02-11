@@ -40,7 +40,8 @@
     const vowel_y = ['a', 'u', 'o'];
     let result = '';
 
-    if (!(charNum < 10)) {
+    
+    if (0 < charNum && !(charNum < 10)) {
       charNum -= 10;
       if (charNum > 37 && charNum < 45) {
         charNum += 2;
@@ -63,7 +64,9 @@
         }
       }
     } else {
-      if (charNum < 5) {
+      if(charNum == -1) {
+        result += 'wo';
+      } else if (charNum < 5) {
         result += 'x' + vowel[charNum % 5];
       } else if (charNum < 8) {
         result += 'xy' + vowel_y[charNum % 5];
@@ -71,7 +74,6 @@
         result += 'xtu';
       }
     }
-    console.log("result =" + result);
     return result;
   }
 
@@ -144,7 +146,7 @@
         if ('ァ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ヶ'.charCodeAt()) {
           charCodeNum -= 'ァ'.charCodeAt() - 'ぁ'.charCodeAt();
         }
-        if (i !== str.length && 'ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+        if (i !== str.length && 'ｦ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
           if (str.charAt(i + 1) == 'ﾞ') {
             charCodeNum += 5 * 9;
             i++;
@@ -164,7 +166,6 @@
 
         } else if (i !== str.length && is_consonant(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt())) {
           result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt();
-          console.log(roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()].charAt());
         } else {
           result += 'xtu';
           if (i === str.length) {
@@ -189,7 +190,7 @@
           result += roman_alphabet[charCodeNum - 'ぁ'.charCodeAt()];
         }
 
-      } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
+      } else if ('ｦ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         charCodeNum -= 'ｧ'.charCodeAt();
         if (str.charAt(i + 1) == 'ﾞ') {
           charCodeNum += 5 * 9;
@@ -275,7 +276,7 @@
       //ら行
       'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ',
       //わ行
-      'ヮ', 'ﾜ', 'ｲ', 'ｴ', 'ｦ', 'ﾝ'
+      'ﾜ', 'ﾜ', 'ｲ', 'ｴ', 'ｦ', 'ﾝ'
     ]
 
 
@@ -341,7 +342,6 @@
     for (i = 0; i < str.length; i++) {
       let charCodeNum = str.charCodeAt(i);
       let charCode = str.charAt(i);
-
       if (charCodeNum == 'ｦ'.charCodeAt() || charCodeNum == 'ヲ'.charCodeAt() || charCodeNum == 'を'.charCodeAt()) {
         result += '・ーーー'; 
       } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
