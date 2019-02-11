@@ -11,11 +11,13 @@ button{
 
 input{
   height: 20px;
+  width: 652px;
 }
 
 select{
   width: 200px; 
 }
+
 
 h3{
   color: #000c3a;
