@@ -342,7 +342,7 @@
       let charCodeNum = str.charCodeAt(i);
       let charCode = str.charAt(i);
 
-      if (charCodeNum == 'ｦ'.charCodeAt() || charCodeNum == 'ヲ'.charCodeAt() || 'を'.charCodeAt()) {
+      if (charCodeNum == 'ｦ'.charCodeAt() || charCodeNum == 'ヲ'.charCodeAt() || charCodeNum == 'を'.charCodeAt()) {
         result += '・ーーー'; 
       } else if ('ｧ'.charCodeAt() <= charCodeNum && charCodeNum <= 'ﾟ'.charCodeAt()) {
         result += changeHalfKata_morse(charCode);
