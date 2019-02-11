@@ -1,5 +1,5 @@
 body {
-  background-color: #DFDFFF;
+  background-color: #a2e4f0;
   width: 750px;
   margin-left: auto;
   margin-right: auto;
@@ -13,7 +13,13 @@ input{
   height: 20px;
 }
 
-
 select{
   width: 200px; 
+}
+
+h3{
+  color: #000c3a;
+}
+p{
+  color: #000c3a;
 }
