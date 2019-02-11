@@ -8,6 +8,7 @@
   const resultHeader = document.getElementById('header');
   const resultContents = document.getElementById('contents');
 
+  //引数の文字が子音ならtrueを返す関数
   function is_consonant(char) {
     if (char == 'a' || char == 'i' || char == 'u' || char == 'e' || char == 'o') {
       return false;
@@ -16,6 +17,7 @@
     }
   }
 
+  //指定されたdivタグに指定されたフォーマットの出力をする関数
   function output(tag, format, output_message) {
     const format_tag = document.createElement(format);
     format_tag.innerText = output_message;
@@ -23,6 +25,7 @@
     return 0;
   }
 
+  //変換できない文字が含まれていた時に変換できないことと，変換できない文字を出力する関数
   function output_error_message(error_char) {
     removeAllChildren(resultHeader);
     output(resultHeader, 'h3', 'エラー');
@@ -30,6 +33,7 @@
     return 0;
   }
 
+  //半角カタカナをローマ字にする関数
   function half_of_charJA(charNum) {
     const consonant = ['', 'k', 's', 't', 'n', 'h', 'm', 'y', 'r', 'w', 'g', 'z', 'd', '', 'b', 'p'];
     const vowel = ['a', 'i', 'u', 'e', 'o'];
@@ -71,6 +75,7 @@
     return result;
   }
 
+  //拗音が含まれていた時にヘボン式ローマ字に変換する関数(半角カタカナ)
   function chengeYouon_alpha(charNum, youonCharNum) {
     const youonConsonant = ['', 'ky', 'sy', 'ch', 'ny', 'hy', 'my', '', 'ry', '', 'gy', 'j', '', '', 'by', 'py'];
     const vowel_y = ['a', 'u', 'o'];
@@ -81,6 +86,7 @@
     return result;
   }
 
+  //拗音が含まれていた時にヘボン式ローマ字に変換する関数(ひらがな，全角カタカナ)
   function chengeYouon_alpha_hira_kata(char, youonChar) {
     let result = '';
     if (char == 'chi') {
@@ -93,6 +99,7 @@
     return result;
   }
 
+  //ひらがな，かたかなをローマ字に変換する関数
   function chengeJA_Alpha(str) {
     let can_chenge = true;
     let result = '';
@@ -121,6 +128,7 @@
       //んゔゕゖ
       'n', 'vu', 'xka', 'xke'
     ];
+
 
     let i;
     for (i = 0; i < str.length; i++) {
@@ -210,6 +218,7 @@
     }
   }
 
+  //アルファベットをモールス信号にする関数
   function chengeAlpha_Morse(str) {
     const morse_code = [
       //ABCDEFG
@@ -243,6 +252,7 @@
     return result;
   }
 
+  //全角カタカナ，ひらがなを半角カタカナに変換する関数
   function chengeFull_half(charNum) {
     charNum -= 'ぁ'.charCodeAt();
     const full_half = [
@@ -274,7 +284,7 @@
 
   }
 
-  
+  //半角カタカナを和文モールス信号に変換する関数
   function changeHalfKata_morse(char) {
     const japanese_morse = [
       //あ行
@@ -322,6 +332,7 @@
 
   }
 
+  //ひらがな，カタカナを和文モールス信号に変換する関数
   function changeJA_morse(str) {
     let result = '';
     let can_chenge = true;
@@ -357,12 +368,14 @@
     }
   }
 
+  //子要素を削除する関数
   function removeAllChildren(element) {
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }
   }
 
+  //ボタンを押された時に関数を実行する
   encodeButton.onclick = () => {
     let inputText = inputTextBox.value;
     let morseOptionValue = morseOption.value;
@@ -388,6 +401,7 @@
     output(resultContents, 'p', inputText + ' をモールス信号に変換すると " ' + result + ' " です。');
   }
 
+  //テキストボックスでenterを押された時にボタンを押したのと同じ処理を実行する
   inputTextBox.onkeydown = (event) => {
     if (event.keyCode === 13) {
       encodeButton.onclick();
