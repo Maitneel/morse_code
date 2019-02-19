@@ -8,4 +8,10 @@
     let inputText = inputTextBox.value;
     console.log(inputText);
   }
+
+  inputTextBox.onkeydown = (event) => {
+    if (event.keyCode == 13) {
+      decodeButton.onclick()
+    }
+  }
 })();
